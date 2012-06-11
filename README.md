@@ -14,12 +14,12 @@ Make sure you include org.apache.httpcomponents httpclient and httpcore as well 
 	    <artifactId>httpclient</artifactId>
 	    <version>4.1.2</version>
 	</dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpcore</artifactId>
-            <version>4.1.2</version>
-        </dependency>
-        <dependency>
+	<dependency>
+	    <groupId>org.apache.httpcomponents</groupId>
+	    <artifactId>httpcore</artifactId>
+	    <version>4.1.2</version>
+	</dependency>
+	<dependency>
 	    <groupId>commons-codec</groupId>
 	    <artifactId>commons-codec</artifactId>
 	    <version>1.6</version>
