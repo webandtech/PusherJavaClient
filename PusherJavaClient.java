@@ -60,7 +60,7 @@ public class PusherJavaClient {
 		return hmacsha256(signature);
 	}
 	
-	public static void triggerPush(String channel, String event, String jsonData) throws IOException {
+	public static int triggerPush(String channel, String event, String jsonData) throws IOException {
 		StringBuffer query = new StringBuffer();
 		query.append("auth_key=" + API_KEY);
 	    	query.append("&auth_timestamp=" + String.valueOf(System.currentTimeMillis() / 1000));
@@ -85,6 +85,11 @@ public class PusherJavaClient {
 		httpPost.setEntity(new StringEntity(jsonData));
 		
 		HttpResponse httpResponse = httpClient.execute(httpPost);
-		httpResponse.getEntity();
+		
+		int statusCode = httpResponse.getStatusLine().getStatusCode();
+		
+		httpClient.getConnectionManager().shutdown();
+		
+		return statusCode; // should be 202 ACCEPTED
 	}
 }
