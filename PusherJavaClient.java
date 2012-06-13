@@ -76,7 +76,7 @@ public class PusherJavaClient {
 		HttpParams httpParams = new BasicHttpParams();
 		
 	    	HttpConnectionParams.setConnectionTimeout(httpParams, connectionTimeout);
-	    	HttpConnectionParams.setConnectionTimeout(httpParams, socketTimeout);
+	    	HttpConnectionParams.setSoTimeout(httpParams, socketTimeout);
 	    	
 		DefaultHttpClient httpClient = new DefaultHttpClient(httpParams);
 		HttpPost httpPost = new HttpPost(fullUrl);
@@ -84,12 +84,13 @@ public class PusherJavaClient {
  		httpPost.addHeader("Content-Type", "application/json");
 		httpPost.setEntity(new StringEntity(jsonData));
 		
-		HttpResponse httpResponse = httpClient.execute(httpPost);
-		
-		int statusCode = httpResponse.getStatusLine().getStatusCode();
-		
-		httpClient.getConnectionManager().shutdown();
-		
-		return statusCode; // should be 202 ACCEPTED
+		try {
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+			int statusCode = httpResponse.getStatusLine().getStatusCode();
+			return statusCode;
+			
+		} finally {
+			httpClient.getConnectionManager().shutdown();
+		}
 	}
 }
